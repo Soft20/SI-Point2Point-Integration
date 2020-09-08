@@ -13,6 +13,8 @@
 		"start": "ts-node src/index.ts"
 	},
 	"dependencies": {
+		"whois": "^2.13.0",
+		"whois-json": "^2.0.4",
 		"yargs": "^15.4.1"
 	}
 }

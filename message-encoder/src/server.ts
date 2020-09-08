@@ -16,7 +16,13 @@ server.on('connection', (socket) => {
 		const request: string = buffer.toString();
 
 		// ...
-		if (request == 'stop') {
+		if (request == 'delay') {
+			setTimeout(() => {
+				socket.write(`HTTP/1.1 200 OK\r\n\r\n${request}`);
+			}, 5000);
+		}
+		// ...
+		else if (request == 'stop') {
 			const message: string = 'closing server';
 			socket.write(`HTTP/1.1 200 OK\r\n\r\n${message}`);
 			socket.end();

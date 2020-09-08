@@ -33,8 +33,8 @@ client.connect(PORT, HOST, () => {
 	});
 
 	// when data is received
-	client.on('data', (data) => {
-		const response: string = data.toString();
+	client.on('data', async (buffer) => {
+		const response: string = buffer.toString();
 		const body = getBody(response);
 		console.log('Response::', body, '\n');
 

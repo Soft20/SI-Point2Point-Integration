@@ -1,6 +1,6 @@
-import * as readline from 'readline'; // https://nodejs.org/api/readline.html
-import * as net from 'net';
+import readline from 'readline'; // https://nodejs.org/api/readline.html
 import yargs from 'yargs';
+const whois = require('whois');
 
 // input config
 const rl = readline.createInterface({
@@ -9,9 +9,7 @@ const rl = readline.createInterface({
 });
 
 const FALLBACK_PORT: number = 43;
-const FALLBACK_HOST: string = '193.163.102.55';
-
-const client: net.Socket = new net.Socket();
+const FALLBACK_HOST: string = 'whois.dk-hostmaster.dk';
 
 const args = yargs.options({
 	host: { type: 'string', demandOption: false, alias: 'h' },
@@ -24,32 +22,19 @@ if (!args.port) console.warn(`Port value missing, using fallback value: ${FALLBA
 const HOST: string = args.host || FALLBACK_HOST;
 const PORT: number = args.port || FALLBACK_PORT;
 
-client.connect(PORT, HOST, () => {
-	console.log(`Connected to ${HOST} @ port ${PORT}`);
-
-	// prompts client to send message or "stop" to close the socket
+function lookupPrompt() {
 	rl.question('Send the host\nHost:: ', (data: string) => {
-		console.log('input:: ', data);
-		const res = client.write(data);
-		console.log(res);
+		whois.lookup(
+			data,
+			{
+				server: `${HOST}:${PORT}`,
+			},
+			function (err: any, data: any) {
+				console.log(data);
+				lookupPrompt();
+			}
+		);
 	});
-});
+}
 
-client.on('data', (data) => {
-	console.log(typeof data);
-	const response: string = data.toString();
-	// const body = getBody(response);
-	console.log('Response::', response);
-	client.destroy();
-});
-
-client.on('close', () => console.log('Connection closed'));
-
-client.on('error', (e) => console.log('Some error:', e));
-
-const getBody = (response: string) => {
-	const divider: string = '\r\n\r\n';
-	const index: number = response.indexOf(divider);
-	const body: string = response.slice(index + divider.length);
-	return body;
-};
+lookupPrompt();

@@ -13,5 +13,9 @@
 		"build": "yarn tsc",
 		"server": "nodemon",
 		"client": "ts-node src/client.ts"
+	},
+	"dependencies": {
+		"@types/base-64": "^0.1.3",
+		"base-64": "^0.1.0"
 	}
 }
