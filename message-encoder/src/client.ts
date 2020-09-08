@@ -2,7 +2,7 @@ import * as readline from 'readline'; // https://nodejs.org/api/readline.html
 import * as net from 'net'; // https://nodejs.org/api/net.html
 import yargs from 'yargs'; // https://www.npmjs.com/package/yargs
 
-// system arguments config
+/// system arguments config
 const args = yargs.options({
 	host: { type: 'string', demandOption: false, alias: 'h' },
 	port: { type: 'number', demandOption: false, alias: 'p' },

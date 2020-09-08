@@ -14,7 +14,7 @@ server.on('error', (err) => {
 
 const sections = [];
 
-// Image Receiver
+/// Image Receiver
 // server.on('message', (buffer, rinfo) => {
 // 	const msg = buffer.toString();
 // 	const split = msg.split(';');

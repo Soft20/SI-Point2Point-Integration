@@ -2,7 +2,7 @@ import readline from 'readline'; // https://nodejs.org/api/readline.html
 import yargs from 'yargs';
 const whois = require('whois');
 
-// input config
+/// input config
 const rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
